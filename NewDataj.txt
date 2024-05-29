@@ -1,0 +1,287 @@
+//String Operations
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Operations</title>
+    <style>
+        /* Basic styling for the form */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .button {
+            margin: 3px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <label for="inputString">Enter a string:</label>
+        <input type="text" id="inputString">
+        <input type="button" class="button" value="Find Length" id="b1">
+        <input type="button" class="button" value="Check Palindrome" id="b2">
+        <input type="button" class="button" value="Reverse String" id="b3">
+        <input type="button" class="button" value="Convert Case" id="b4">
+        <br>
+        <textarea id="resultArea" rows="5" readonly></textarea>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.button').click(function(){
+                var id = $(this).attr('id');
+                var inputString = $('#inputString').val();
+                var result = '';
+                
+                if(id === 'b1') {
+                    result = "Length of the string: " + inputString.length;
+                } else if(id === 'b2') {
+                    var reversedString = inputString.split('').reverse().join('');
+                    result = inputString === reversedString ? 'The string is a palindrome.' : 'The string is not a palindrome.';
+                } else if(id === 'b3') {
+                    result = "Reversed string: " + inputString.split('').reverse().join('');
+                } else if(id === 'b4') {
+                    var lowerCaseString = inputString.toLowerCase();
+                    var upperCaseString = inputString.toUpperCase();
+                    result = "Lowercase: " + lowerCaseString + "\nUppercase: " + upperCaseString;
+                }
+                
+                $('#resultArea').val(result);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+//primeArmstrongFactorial
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .calculator {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        .calculator label,
+        .calculator button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .calculator input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .calculator button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <label for="inputNumber">Enter a number:</label>
+        <input type="number" id="inputNumber">
+        <button id="checkPrime">Check Prime</button>
+        <button id="checkArmstrong">Check Armstrong</button>
+        <button id="findFactorial">Find Factorial</button>
+        <div class="result" id="resultArea"></div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            function isPrime(num) {
+                if (num <= 1) return false;
+                if (num <= 3) return true;
+                if (num % 2 === 0 || num % 3 === 0) return false;
+                for (let i = 5; i * i <= num; i += 6) {
+                    if (num % i === 0 || num % (i + 2) === 0) return false;
+                }
+                return true;
+            }
+
+            function isArmstrong(num) {
+                let sum = 0;
+                let temp = num;
+                const n = num.toString().length;
+                while (temp > 0) {
+                    let digit = temp % 10;
+                    sum += Math.pow(digit, n);
+                    temp = Math.floor(temp / 10);
+                }
+                return sum === num;
+            }
+
+            function factorial(num) {
+                if (num === 0) return 1;
+                let fact = 1;
+                for (let i = 1; i <= num; i++) {
+                    fact *= i;
+                }
+                return fact;
+            }
+
+            $('#checkPrime').click(function() {
+                let num = parseInt($('#inputNumber').val());
+                if (isNaN(num)) {
+                    $('#resultArea').text('Please enter a valid number.');
+                } else {
+                    let result = isPrime(num) ? `${num} is a prime number.` : `${num} is not a prime number.`;
+                    $('#resultArea').text(result);
+                }
+            });
+
+            $('#checkArmstrong').click(function() {
+                let num = parseInt($('#inputNumber').val());
+                if (isNaN(num)) {
+                    $('#resultArea').text('Please enter a valid number.');
+                } else {
+                    let result = isArmstrong(num) ? `${num} is an Armstrong number.` : `${num} is not an Armstrong number.`;
+                    $('#resultArea').text(result);
+                }
+            });
+
+            $('#findFactorial').click(function() {
+                let num = parseInt($('#inputNumber').val());
+                if (isNaN(num)) {
+                    $('#resultArea').text('Please enter a valid number.');
+                } else {
+                    let result = `Factorial of ${num} is ${factorial(num)}.`;
+                    $('#resultArea').text(result);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+//passwordStrength
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .pass{
+            font-size: larger;
+        }
+        .validations:checked + input {
+            color: green;
+        }
+    </style>
+    <script>
+        function validatePassword() {
+            var lowercaseChecked = document.getElementById("lowercase").checked;
+            var uppercaseChecked = document.getElementById("uppercase").checked;
+            var digitChecked = document.getElementById("digit").checked;
+            var specialCharChecked = document.getElementById("specialChar").checked;
+            var minLengthChecked = document.getElementById("minLength").checked;
+
+            if (lowercaseChecked && uppercaseChecked && digitChecked && specialCharChecked && minLengthChecked) {
+                return true;
+            } else {
+                alert("Please enter the password with all the given validations");
+                return false;
+            }
+        }
+
+        function checkValidation() {
+            var password = document.getElementById("password").value;
+            var lowercase = /[a-z]/.test(password);
+            var uppercase = /[A-Z]/.test(password);
+            var digit = /\d/.test(password);
+            var specialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            var minLength = password.length >= 8;
+
+            document.getElementById("lowercase").checked = lowercase;
+            document.getElementById("uppercase").checked = uppercase;
+            document.getElementById("digit").checked = digit;
+            document.getElementById("specialChar").checked = specialChar;
+            document.getElementById("minLength").checked = minLength;
+        }
+    </script>
+</head>
+<body>
+    <label for="pass" class="pass">Password :</label>
+    <input type="password" id="password" onkeyup="checkValidation()"><br>
+
+    <p>Password must contain the following :</p>
+    <input class="validations" type="checkbox" id="lowercase">A lowercase letter<br>
+    <input class="validations" type="checkbox" id="uppercase">An uppercase letter<br>
+    <input class="validations" type="checkbox" id="digit">A digit<br>
+    <input class="validations" type="checkbox" id="specialChar">A special character<br>
+    <input class="validations" type="checkbox" id="minLength">Minimum 8 characters<br><br>
+
+    <button onclick="return validatePassword()" type="submit">Submit</button>
+</body>
+</html>
+
+
+
